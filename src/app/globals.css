@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Aria Cole: near-black stage, warm cream type, one hot coral accent. Motion is the content. */
+@theme inline {
+  --color-ink: oklch(14% 0.012 40);
+  --color-ink-2: oklch(19% 0.014 40);
+  --color-line: oklch(30% 0.016 40);
+  --color-cream: oklch(95% 0.02 80);
+  --color-dim: oklch(70% 0.02 70);
+  --color-coral: oklch(68% 0.21 35);
+  --color-sun: oklch(86% 0.16 90);
+  --color-sky: oklch(76% 0.12 220);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-anton);
+}
+
+html { color-scheme: dark; scroll-behavior: smooth; }
+body { background: var(--color-ink); color: var(--color-cream); }
+::selection { background: var(--color-coral); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 3px; }
+
+/* Hero name: letters rise in one by one, then breathe. */
+.rise { display: inline-block; transform: translateY(110%); animation: rise 0.9s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i) * 70ms); }
+@keyframes rise { to { transform: translateY(0); } }
+.breathe { animation: breathe 6s ease-in-out infinite; }
+@keyframes breathe { 50% { letter-spacing: 0.02em; } }
+
+.blob { animation: blob 14s ease-in-out infinite alternate; }
+@keyframes blob { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(8%,-6%) scale(1.15); } 100% { transform: translate(-6%,4%) scale(0.95); } }
+
+.marquee { animation: marquee 28s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Reel tiles: each loop is a tiny motion piece. Hover speeds it up. */
+.tile:hover .loop, .tile:focus-within .loop { animation-duration: calc(var(--d, 4s) / 2.5); }
+.loop { animation-duration: var(--d, 4s); animation-iteration-count: infinite; animation-timing-function: cubic-bezier(.65,0,.35,1); }
+
+.orbit { animation-name: orbit; transform-origin: 50% 50%; animation-timing-function: linear; }
+@keyframes orbit { to { transform: rotate(360deg); } }
+
+.morph { animation-name: morph; animation-direction: alternate; }
+@keyframes morph {
+  0% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: rotate(0deg) scale(1); }
+  100% { border-radius: 70% 30% 46% 54% / 30% 39% 61% 70%; transform: rotate(160deg) scale(1.12); }
+}
+
+.bounce { animation-name: bounce; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  45% { transform: translateY(-120%) scale(0.95, 1.08); }
+  85% { transform: translateY(0) scale(1.15, 0.85); }
+}
+
+.wave { animation-name: wave; animation-direction: alternate; transform-origin: bottom; }
+@keyframes wave { from { transform: scaleY(0.15); } to { transform: scaleY(1); } }
+
+.spin3d { animation-name: spin3d; transform-style: preserve-3d; animation-timing-function: linear; }
+@keyframes spin3d { to { transform: rotateX(360deg) rotateY(360deg); } }
+
+.reveal { animation-name: reveal; }
+@keyframes reveal {
+  0%, 10% { clip-path: inset(0 100% 0 0); }
+  45%, 70% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+
+.dash { stroke-dasharray: 400; animation-name: dash; animation-direction: alternate; }
+@keyframes dash { from { stroke-dashoffset: 400; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rise { transform: none; }
+  html { scroll-behavior: auto; }
+}
